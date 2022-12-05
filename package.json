@@ -3,7 +3,8 @@
     "dev": "nodemon --exec node --loader ts-node/esm src/index.ts",
     "day1": "ts-node src/1/index.ts",
     "day2": "ts-node src/2/index.ts",
-    "day3": "ts-node src/3/index.ts"
+    "day3": "ts-node src/3/index.ts",
+    "day4": "ts-node src/4/index.ts"
   },
   "devDependencies": {
     "@types/node": "^18.11.10",
