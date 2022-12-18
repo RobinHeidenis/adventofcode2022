@@ -25,6 +25,22 @@ const popNextValuableElement = (array: string[]): string => {
   return element ?? '';
 };
 
+const logResult = (array: string[][]) => {
+  let result = '';
+
+  array.forEach((item) => {
+    item.reverse();
+    for (let i = 0; i < item.length; i++) {
+      if (item[i] !== ' ') {
+        result += item[i];
+        break;
+      }
+    }
+  });
+
+  console.log(result);
+};
+
 const getCrateOnTopOfEachStack = () => {
   const input = readFileSync(path.join(__dirname, 'input.txt'), 'utf8');
   console.time('getCrateOnTopOfEachStack');
@@ -42,29 +58,17 @@ const getCrateOnTopOfEachStack = () => {
       );
 
       if (!element) {
-        throw new Error('dumbass lmao');
+        throw new Error('No element found');
       }
 
       array[parseInt(matches[2][0]) - 1].push(element);
     }
   });
 
-  let result = '';
-
-  array.forEach((item) => {
-    item.reverse();
-    for (let i = 0; i < item.length; i++) {
-      if (item[i] !== ' ') {
-        result += item[i];
-        break;
-      }
-    }
-  });
-
-  console.log(result);
+  logResult(array);
 };
 
-const getCreateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001InsteadOfTheCrateMover9000SoTheResultIsDifferent =
+const getCrateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001InsteadOfTheCrateMover9000SoTheResultIsDifferent =
   () => {
     const input = readFileSync(path.join(__dirname, 'input.txt'), 'utf8');
     console.time(
@@ -96,24 +100,12 @@ const getCreateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001Instea
       });
     });
 
-    let result = '';
-
-    array.forEach((item) => {
-      item.reverse();
-      for (let i = 0; i < item.length; i++) {
-        if (item[i] !== ' ') {
-          result += item[i];
-          break;
-        }
-      }
-    });
-
-    console.log(result);
+    logResult(array);
   };
 
 getCrateOnTopOfEachStack();
 console.timeEnd('getCrateOnTopOfEachStack');
-getCreateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001InsteadOfTheCrateMover9000SoTheResultIsDifferent();
+getCrateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001InsteadOfTheCrateMover9000SoTheResultIsDifferent();
 console.timeEnd(
   'getCreateOnTopOfEachStackButThisTimeTheyWereMovedByTheCrateMover9001InsteadOfTheCrateMover9000SoTheResultIsDifferent'
 );
