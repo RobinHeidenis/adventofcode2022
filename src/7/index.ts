@@ -1,41 +1,50 @@
 import { readFileSync } from 'fs';
 import path from 'path';
 
-interface BaseCommand {
-  command: string;
+interface File {
+  name: string;
+  size: number;
 }
 
-interface CDCommand extends BaseCommand {
-  command: 'cd';
-  parameter: string;
+interface Directory {
+  name: string;
+  size: number;
+  directories: Directory[];
+  files: File[];
+  parent?: Directory;
 }
-
-interface LSCommand extends BaseCommand {
-  command: 'ls';
-  output: {
-    file: string;
-    size: number;
-  }[];
-}
-
-type Command = LSCommand | CDCommand;
 
 const getTotalSizeOfDirectoriesUnder100000 = () => {
   const lines = readFileSync(path.join(__dirname, 'input.txt'), 'utf8').split(
-    '$ '
+    '\n'
   );
-  const commands: Command[] = [];
+
+  const root: Directory = {
+    name: '/',
+    size: 0,
+    directories: [],
+    files: [],
+  };
+
+  const currentDirectory: Directory = root;
+
   lines.forEach((line) => {
-    const commandParts = line.split(' ');
-    const command = commandParts[1];
-    if (command === 'cd') {
-      const parameter = commandParts[2];
-      commands.push({ command, parameter });
+    if (line.startsWith('$ ls') || line.startsWith('dir')) {
+      return;
     }
-    if (command === 'ls') {
+
+    if (line.startsWith('$ cd')) {
+      if (currentDirectory.name === '/') return;
+
+      const newDirectory: Directory = {
+        name: line.split(' ')[2],
+        size: 0,
+        directories: [],
+        files: [],
+        parent: currentDirectory,
+      };
     }
   });
-  console.log(lines);
 };
 
 getTotalSizeOfDirectoriesUnder100000();
